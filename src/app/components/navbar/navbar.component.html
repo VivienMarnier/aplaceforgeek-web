@@ -1,0 +1,36 @@
+<header>
+    <nav class="navbar fixed-top navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">a Place for Geeks</span>
+
+        <ul class="nav justify-content-end">
+            <li *ngIf="!user" class="nav-item">
+                <a [routerLink]="'/register'" routerLinkActive="active" class="text-light btn btn-primary">
+                    <span>Register</span>
+                </a>
+            </li>
+            <li *ngIf="!user" class="nav-item ml-2">
+                <a [routerLink]="'/login'" routerLinkActive="active" class="text-light ml-2 btn btn-info">
+                    <fa-icon [icon]="['fas', 'sign-in-alt']"></fa-icon>
+                    <span class="ml-2">Login</span>
+                </a>
+            </li>
+            <li *ngIf="user && isUserAdmin()" class="nav-item ml-2">
+                <a [routerLink]="'/admin/dashboard'" routerLinkActive="active" class="ml-2 btn btn-light">
+                    <fa-icon [icon]="['fas', 'toolbox']"></fa-icon>
+                    <span class="ml-2">Administration</span>
+                </a>
+            </li>
+            <li *ngIf="user" class="nav-item ml-2">
+                <a [routerLink]="'/settings'" routerLinkActive="active" class="ml-2 btn btn-light">
+                    <fa-icon [icon]="['fas', 'users-cog']"></fa-icon>
+                    <span class="ml-2">Settings</span>
+                </a>
+            </li>
+            <li *ngIf="user" class="nav-item ml-2">
+                <button type="button" class="btn btn-danger" (click)="logoutUser()">
+                    <fa-icon [icon]="['fas', 'power-off']"></fa-icon><span class="ml-2">Logout</span>
+                </button>
+            </li>
+        </ul>
+    </nav>
+</header>

@@ -1,0 +1,27 @@
+<div class="container">
+    <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
+        <mat-tab label="Users">
+            <div class="mt-4">
+                <div *ngIf="users; else elseUsersBlock">
+
+                </div>
+                <ng-template #elseUsersBlock>No Users found.</ng-template>
+            </div>
+        </mat-tab>
+        <mat-tab label="Games">
+            <div class="mt-4">
+                <div class="">
+                    <button type="button" class="btn btn-danger" (click)="createNewGame()">
+                        <span class="ml-2">Add a game</span>
+                    </button>
+                </div>
+    
+                <div *ngIf="games; else elseGamesBlock">
+    
+                </div>
+                <ng-template #elseGamesBlock>No Games found.</ng-template>
+            </div>
+        </mat-tab>
+      </mat-tab-group>
+</div>
+

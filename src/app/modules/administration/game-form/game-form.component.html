@@ -1,0 +1,35 @@
+<!-- Modal -->
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add new game</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="activeModal.close()">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="form-group">
+            <label for="label">Label *</label>
+            <input type="text" formControlName="label" class="form-control" id="label">
+            <div *ngIf="f.label.errors" class="invalid-feedback">
+                <div *ngIf="f.label.errors.required">Game label is required</div>
+                <div *ngIf="f.label.errors.maxlength">Game label must not exceed 50 characters</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="picture">Game picture *</label>
+            <input type="file" class="form-control-file" id="picture" (change)="onFileSelect($event)">
+            <img [src]="imageSrc" class="mt-2" *ngIf="imageSrc" style="height: 150px; width:150px">
+        </div>
+        <div class="form-group">
+            <label for="description">Game description</label>
+            <textarea formControlName="description" class="form-control" id="description"></textarea>
+            <div *ngIf="f.description.errors" class="invalid-feedback">
+                <div *ngIf="f.description.errors.maxlength">Game description must not exceed 250 characters</div>
+            </div>
+        </div>
+        <div class="float-right mb-4 mt-2">
+            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="button" class="btn btn-secondary ml-4" (click)="activeModal.close()">Cancel</button>
+        </div>
+    </form>
+</div>
