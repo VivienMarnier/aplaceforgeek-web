@@ -67,15 +67,28 @@ export class AccountService {
    * Check if logged user has admin role
    */
   public isUserAdmin(): boolean{
-    if(this.loggedUser && this.loggedUser.roles.find(role => role === 'ROLE_ADMIN')){
+    if(this.isLoggedIn() && this.loggedUser.roles.find(role => role === 'ROLE_ADMIN')){
       return true;
     }
     return false;
   }
 
+  public isLoggedIn(){
+    const token = localStorage.getItem('token');
+    if(this.loggedUser && !this.jwtHelperService.isTokenExpired(token)){
+      return true;
+    }
+    return false;
+  }
+
+  public getUser(){
+    return this.loggedUser;
+  }
+
   private setupUser(token: string) {
     const userInfos = this.jwtHelperService.decodeToken(token);
-    this.loggedUser = new User(token);
+    this.loggedUser = new User();
+    this.loggedUser.id = userInfos.id;
     this.loggedUser.email = userInfos.email;
     this.loggedUser.roles = userInfos.roles;
     this.userSubject.next(this.loggedUser);

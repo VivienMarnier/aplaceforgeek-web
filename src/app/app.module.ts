@@ -57,6 +57,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
           environment.baseUrl + '/api/user-registration/registration',
           environment.baseUrl + '/api/login_check'
         ],
+        allowedDomains: [
+          'localhost',
+        ],
       },
     }),
     NgbModule,

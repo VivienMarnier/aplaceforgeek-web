@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BaseForm } from '../../shared/forms/base-form';
 import { Game } from '../../shared/models/game.model';
+import { PictureValidator } from '../../shared/validators/picture.validator';
 
 @Component({
   selector: 'app-game-form',
@@ -11,8 +12,10 @@ import { Game } from '../../shared/models/game.model';
 })
 export class GameFormComponent extends BaseForm implements OnInit {
 
+  public modalTitle: string = "Add new game";
   public imageSrc: string;
-
+  public game: Game;
+ 
   constructor(public activeModal: NgbActiveModal,private fb: FormBuilder) {
     super();
   }
@@ -23,32 +26,48 @@ export class GameFormComponent extends BaseForm implements OnInit {
 
   private createGameForm(): void{
     
-    this.form = this.fb.group({
-      label: ['',[Validators.required, Validators.maxLength(50)]],
-      description: ['', [Validators.maxLength(250)]],
-      picture: ['', [Validators.required]],
-    });
+    if(!this.game){
+      // CREATION
+      this.form = this.fb.group({
+        label: ['',[Validators.required, Validators.maxLength(50)]],
+        description: ['', [Validators.maxLength(250)]],
+        picture: ['', [Validators.required, PictureValidator.extension]],
+        selectedPicture: '',
+      });
+    }else{
+      //EDITION
+      this.form = this.fb.group({
+        label: [this.game.label,[Validators.required, Validators.maxLength(50)]],
+        description: [this.game.description, [Validators.maxLength(250)]],
+        picture: ['',[PictureValidator.extension]],
+        selectedPicture: '',
+      });
+
+      this.imageSrc = this.game.picture;
+    }
   }
 
   public save(){
-    console.log(this.form.valid);
     if(this.form.valid){
       const label = this.form.get('label').value;
       const description = this.form.get('description').value;
-      const picture = this.form.get('picture').value;
+      const picture = this.form.get('selectedPicture').value;
       const game = new Game(label,description,picture,true);
+      if(this.game){
+        game.id = this.game.id
+      }
       this.activeModal.close(game);
     }
   }
 
-  public onFileSelect(event){
-    if (event.target.files.length > 0) {
+  public onFileSelect(files: FileList){
+    this.form.get('picture').setValidators([Validators.required, PictureValidator.extension]);
+    if (files.length > 0 && !this.form.controls.picture.errors) {
       const reader = new FileReader();
-      const file = event.target.files[0];
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(files[0]);
       reader.onload = () => {
         this.imageSrc = reader.result as string;
-        this.form.get('picture').patchValue(reader.result);
+        this.form.get('selectedPicture').patchValue(reader.result);
       };
     }
   }

@@ -7,6 +7,7 @@ export class Game{
         this.active = active;
     }
 
+    id: number;
     label: string;
     description: string;
     picture: string;

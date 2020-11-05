@@ -1,10 +1,10 @@
 export class User{
 
-    constructor(token: string){
-        this.token = token;
+    constructor(){
     }
 
-    token: string;
+    id: number;
     email: string;
     roles: [];
+    active: boolean;
 }

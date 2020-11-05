@@ -10,7 +10,7 @@
             <input type="password" formControlName="password" class="form-control" id="password">
           </div>
           <div class="float-right">
-            <button type="submit" class="btn btn-success">Log me</button>
+            <button type="submit" [disabled]="!form.valid" class="btn btn-success">Log me</button>
             <button type="button" class="btn btn-secondary ml-4">Cancel</button>
           </div>
     </form>

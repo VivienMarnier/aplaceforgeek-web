@@ -1,0 +1,19 @@
+<div class="container">
+    <div *ngIf="games.length > 0; else elseGamesBlock">
+        <div *ngFor="let game of games" class="card w-75">
+            <div class="card-body">
+              <h5 class="card-title">{{game.label}}</h5>
+              <hr>
+              <div class="text-center mb-4">
+                <img [src]="game.picture" class="card-img-top" alt="{{game.label}}" style="height: 150px; width:150px">
+              </div>
+              <p class="card-text">{{game.description}}</p>
+              <button class="btn btn-primary float-right" (click)="subscribe(game)">Subscribe !</button>
+            </div>
+          </div>
+    </div>
+    <ng-template #elseGamesBlock>
+        No games to show. Maybe ask for a game to an administrator. 
+    </ng-template>
+</div>
+

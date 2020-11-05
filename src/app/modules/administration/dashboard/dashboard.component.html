@@ -2,22 +2,84 @@
     <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
         <mat-tab label="Users">
             <div class="mt-4">
-                <div *ngIf="users; else elseUsersBlock">
-
+                <div *ngIf="users.length > 0; else elseUsersBlock">
+                    <table class="table table-striped">
+                        <caption>List of users</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Email</th>
+                                <th scope="col" class="text-center">Roles</th>
+                                <th scope="col" class="text-center">Active</th>
+                                <th scope="col" class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of users">
+                                <td class="text-center">{{user.email}}</td>
+                                <td class="text-center">{{user.roles}}</td>
+                                <td class="text-center">
+                                    <mat-slide-toggle [checked]="user.active" (change)="onUserToggleChange($event, user)"></mat-slide-toggle>
+                                </td>
+                                <td class="text-center">
+                                    <fa-icon [icon]="['fas', 'trash']"  class="ml-3" style="cursor: pointer; color: red;" (click)="deleteUser(user)"></fa-icon>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <ng-template #elseUsersBlock>No Users found.</ng-template>
             </div>
         </mat-tab>
         <mat-tab label="Games">
             <div class="mt-4">
-                <div class="">
-                    <button type="button" class="btn btn-danger" (click)="createNewGame()">
-                        <span class="ml-2">Add a game</span>
-                    </button>
+                <div class="mb-4 d-flex w-100">
+                    <div class="mr-auto">
+                        <mat-form-field class="float-left">
+                            <mat-label>Game label</mat-label>
+                            <input matInput type="text" [(ngModel)]="search">
+                            <button mat-button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search=''">
+                                <mat-icon>close</mat-icon>
+                              </button>
+                        </mat-form-field>
+                        <button type="button" class="btn btn-dark ml-2" (click)="searchGames(search)">
+                            <span>Search</span>
+                        </button>
+                    </div>
+                    <div class="ml-auto">
+                        <button type="button" class="btn btn-dark" (click)="createNewGame()">
+                            <fa-icon [icon]="['fas', 'plus-circle']"></fa-icon>
+                            <span class="ml-2">Add a game</span>
+                        </button>
+                    </div>
                 </div>
-    
-                <div *ngIf="games; else elseGamesBlock">
-    
+                <div *ngIf="games.length > 0; else elseGamesBlock">
+                    <table class="table table-striped">
+                        <caption>List of games</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Label</th>
+                                <th scope="col" class="text-center">Description</th>
+                                <th scope="col" class="text-center">Picture</th>
+                                <th scope="col" class="text-center">Active</th>
+                                <th scope="col" class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let game of games">
+                                <td class="text-center">{{game.label}}</td>
+                                <td class="text-center">{{game.description}}</td>
+                                <td class="text-center"><img [src]="game.picture" class="mt-2" style="height: 100px; width:100px"></td>
+                                <td class="text-center">
+                                    <mat-slide-toggle [checked]="game.active" (change)="onGameToggleChange($event, game)"></mat-slide-toggle>
+                                </td>
+                                <td class="text-center">
+                                    <fa-icon [icon]="['fas', 'edit']" style="cursor: pointer;" (click)="editGame(game)"></fa-icon>
+                                    <fa-icon [icon]="['fas', 'trash']"  class="ml-3" style="cursor: pointer; color: red;" (click)="deleteGame(game)"></fa-icon>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <mat-paginator [length]="paginatorLength" [pageIndex]="offset" [pageSize]="limit" [pageSizeOptions]="[10, 25, 50, 100]" (page)="getPaginatorData($event)"></mat-paginator>
                 </div>
                 <ng-template #elseGamesBlock>No Games found.</ng-template>
             </div>
