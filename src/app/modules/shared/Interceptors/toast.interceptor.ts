@@ -20,11 +20,10 @@ intercept(
             }),
             catchError((err: any) => {
                 if(err instanceof HttpErrorResponse) {
-                    
                     try {
                         this.toasterService.error('An error occurred, please try again later.', 'Error', { positionClass: 'toast-bottom-right' });
                     } catch(e) {
-                        this.toasterService.error('An error occurred', '', { positionClass: 'toast-bottom-right' });
+                        this.toasterService.error('An error occurred, please try again later.', 'Error', { positionClass: 'toast-bottom-right' });
                     }
                     //log error 
                 }

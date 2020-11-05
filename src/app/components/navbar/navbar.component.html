@@ -28,7 +28,7 @@
             </li>
             <li *ngIf="user" class="nav-item ml-2">
                 <button type="button" class="btn btn-danger" (click)="logoutUser()">
-                    <fa-icon [icon]="['fas', 'power-off']"></fa-icon><span class="ml-2">Logout</span>
+                    <fa-icon [icon]="['fas', 'power-off']"></fa-icon><span class="ml-2">Logout ({{user.email}})</span>
                 </button>
             </li>
         </ul>

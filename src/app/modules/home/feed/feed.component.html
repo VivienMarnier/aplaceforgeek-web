@@ -1,4 +1,28 @@
 <div class="container">
-    <p>feed works!</p>
+    <div class="row mb-4 float-right">
+        <button type="button" class="btn btn-dark" (click)="createPost()">
+            <fa-icon [icon]="['fas', 'plus-circle']"></fa-icon>
+            <span class="ml-2">Create a publication</span>
+        </button>
+    </div>
+    <div *ngIf="publications.length > 0; else elsePublicationsBlock">
+        <div *ngFor="let publication of publications" class="card w-75">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="#" class="btn btn-primary">Button</a>
+            </div>
+          </div>
+    </div>
+    <ng-template #elsePublicationsBlock>
+        <div>
+            <p>Nothing to show.</p>
+            <p>Maybe publish something or
+                <a [routerLink]="'/games/all'" routerLinkActive="active">
+                    <span class="ml-2">subscribe to more games !</span>
+                </a>
+            </p> 
+        </div>
+    </ng-template>
 </div>
 
