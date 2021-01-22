@@ -6,11 +6,21 @@
         </button>
     </div>
     <div *ngIf="publications.length > 0; else elsePublicationsBlock">
-        <div *ngFor="let publication of publications" class="card w-75">
+        <div *ngFor="let publication of publications" class="card w-75 mb-4">
+            <div class="card-header">
+                <div class="mb-4 d-flex w-100">
+                    <div>
+                        aplaceforgeek/
+                    </div>
+                    <div class="ml-auto">
+                        {{publication.date}}
+                        <button class="ml-2 btn btn-danger btn-sm" (click)="unsubscribe(publication)">Unsubscribe</button>
+                    </div>
+                </div>
+              </div>
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary">Button</a>
+              <h5 class="card-title">{{publication.title}}</h5>
+              <p class="card-text">{{publication.message}}</p>
             </div>
           </div>
     </div>

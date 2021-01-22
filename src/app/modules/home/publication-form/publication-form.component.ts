@@ -28,23 +28,12 @@ export class PublicationFormComponent extends BaseForm implements OnInit {
     this.createPublicationForm();
   }
 
-  private createPublicationForm(): void{
-    
-    if(!this.publication){
-      // CREATION
-      this.form = this.fb.group({
-        game: ['', [Validators.required]],
-        title: ['',[Validators.required, Validators.maxLength(150)]],
-        message: ['', [Validators.maxLength(250)]],
-      });
-    }else{
-      //EDITION
-      this.form = this.fb.group({
-        game: [this.publication.game, [Validators.required]],
-        title: [this.publication.title,[Validators.required, Validators.maxLength(150)]],
-        message: [this.publication.message, [Validators.maxLength(250)]],
-      });
-    }
+  private createPublicationForm(): void{    
+    this.form = this.fb.group({
+      game: [this.publication ? this.publication.game : '', [Validators.required]],
+      title: [this.publication ? this.publication.title : '',[Validators.required, Validators.maxLength(150)]],
+      message: [this.publication ? this.publication.message : '', [Validators.maxLength(250)]],
+    });
   }
 
   public save(){

@@ -21,8 +21,8 @@ export class GamesListComponent implements OnInit {
    * Load games list
    */
   private loadGames(){
-    this.gameService.getList().subscribe(result => {
-      this.games = result;
+    this.gameService.getPaginatorList(0,1,'').subscribe(result => {
+      this.games = result.games;
     });
   }
 
