@@ -24,27 +24,15 @@ export class GameFormComponent extends BaseForm implements OnInit {
     this.createGameForm();
   }
 
-  private createGameForm(): void{
-    
-    if(!this.game){
-      // CREATION
-      this.form = this.fb.group({
-        label: ['',[Validators.required, Validators.maxLength(50)]],
-        description: ['', [Validators.maxLength(250)]],
-        picture: ['', [Validators.required, PictureValidator.extension]],
-        selectedPicture: '',
-      });
-    }else{
-      //EDITION
-      this.form = this.fb.group({
-        label: [this.game.label,[Validators.required, Validators.maxLength(50)]],
-        description: [this.game.description, [Validators.maxLength(250)]],
-        picture: ['',[PictureValidator.extension]],
-        selectedPicture: '',
-      });
+  private createGameForm(): void{    
+    this.form = this.fb.group({
+      label: [this.game ? this.game.label : '',[Validators.required, Validators.maxLength(50)]],
+      description: [this.game ? this.game.description : '', [Validators.maxLength(250)]],
+      picture: ['', [Validators.required, PictureValidator.extension]],
+      selectedPicture: '',
+    });
 
-      this.imageSrc = this.game.picture;
-    }
+    this.imageSrc = this.game ? this.game.picture : null;
   }
 
   public save(){

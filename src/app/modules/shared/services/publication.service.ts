@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Game } from '../models/game.model';
 import { Publication } from '../models/publication.model';
+import { AccountService } from './account.service';
 import { BaseService } from './base.services';
 
 @Injectable({
@@ -10,7 +11,7 @@ import { BaseService } from './base.services';
   })
   export class PublicationService extends BaseService {
 
-    constructor(protected http: HttpClient){
+    constructor(protected http: HttpClient, protected accountService: AccountService){
         super(http);
     }
     
@@ -24,5 +25,9 @@ import { BaseService } from './base.services';
 
     public delete(publicationId: number): Observable<any>{
         return this.deleteWithContext('/api/publications/' + publicationId);
+    }
+
+    public getUserFeed(){
+        return this.getWithContext('/api/users/'+ this.accountService.getUser().id +'/publications');
     }
   }

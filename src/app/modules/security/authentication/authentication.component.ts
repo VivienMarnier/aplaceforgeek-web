@@ -18,11 +18,11 @@ export class AuthenticationComponent extends BaseForm implements OnInit {
       super();
     }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.createAuthenticationForm();
   }
 
-  private createAuthenticationForm(): void{
+  private createAuthenticationForm() {
     this.form = this.fb.group({
       username: ['',[Validators.required,Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8),Validators.maxLength(10)]],
@@ -36,9 +36,6 @@ export class AuthenticationComponent extends BaseForm implements OnInit {
       }, error => {
         console.log(error);
       });
-      return
-    }else{
-        return;
     }
   }
 

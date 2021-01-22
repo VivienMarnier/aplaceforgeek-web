@@ -1,6 +1,6 @@
 <div class="container">
     <div *ngIf="games.length > 0; else elseGamesBlock">
-        <div *ngFor="let game of games" class="card w-75">
+        <div *ngFor="let game of games" class="card w-75 mb-4">
             <div class="card-body">
               <h5 class="card-title">{{game.label}}</h5>
               <hr>

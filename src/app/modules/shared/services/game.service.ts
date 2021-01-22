@@ -15,7 +15,7 @@ import { BaseService } from './base.services';
     }
     
     public create(game: Game): Observable<any>{
-        return this.postWithContext('/api/admin/games/create', game);
+        return this.postWithContext('/api/admin/games', game);
     }
 
     public edit(game: Game): Observable<any>{
@@ -39,6 +39,11 @@ import { BaseService } from './base.services';
     }
     
     public subscribe(game: Game): Observable<any>{
-        return this.putWithContext('/api/games/subscribe/' + game.id, game);
+        return this.putWithContext('/api/games/' + game.id + '/subscribe', game);
+    }
+
+    public unsubscribe(): Observable<any>{
+        return this.deleteWithContext('/api/games/1/unsubscribe');
+        //return this.putWithContext('/api/games/' + game.id + '/unsubscribe', game);
     }
   }
